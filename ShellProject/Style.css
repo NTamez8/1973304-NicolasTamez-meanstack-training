@@ -57,17 +57,19 @@ footer{
     
 }
 .sectionContainer{
-    min-height: 700px;
+    min-height: 800px;
 }
 
 .centerBar{
-float:left;
+	float:left;
     width:calc(66% - 20px);
+	font-size: 20px;
 }
 
 .SideArea{
     width: calc(34% - 20px);
     float:right;
+	font-size:35px;
 }
 .clearFloat{
     clear:both;
