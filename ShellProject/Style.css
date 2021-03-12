@@ -1,3 +1,27 @@
+div{
+	background-color:red;
+	font-size: 20px;
+	padding:0 20px;
+}
+section{
+	padding:0 10px;
+	font-size: 21px;
+	color: white;
+}
+
+footer{
+    position: relative;
+    bottom: 0px;
+    left:0px;
+    padding:0px 10px;
+    background-color: black;
+    color:white;
+    margin-top:25px;
+    text-align: center;
+    min-height: 100px;
+}
+
+
 .header{
     margin:0 auto;
 }
@@ -38,24 +62,13 @@
 
 .centerBar{
 float:left;
-    width:66%;
+    width:calc(66% - 20px);
 }
 
 .SideArea{
-    width:34%;
+    width: calc(34% - 20px);
     float:right;
 }
 .clearFloat{
     clear:both;
-}
-.footerArea{
-    position: relative;
-    bottom: 0px;
-    left:0px;
-    padding:0px 10px;
-    background-color: black;
-    color:white;
-    margin-top:25px;
-    text-align: center;
-    min-height: 100px;
 }
