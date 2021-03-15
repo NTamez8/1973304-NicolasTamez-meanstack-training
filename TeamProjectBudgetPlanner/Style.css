@@ -1,0 +1,32 @@
+.Container{
+    margin: 0 auto;
+    text-align: center;
+}
+.BudgetLabel{
+    width:100px;
+    text-align: unset;
+    display: inline-block;
+}
+
+.ButtonStyle{
+    margin:10px;
+}
+
+h1{
+    font-size: 50px;
+    color:blue;
+}
+
+
+table, th,td{
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    padding:5px 5px;
+    
+}
+
+.LinkList li{
+    list-style-type: none;
+    font-size: 25px;
+}
