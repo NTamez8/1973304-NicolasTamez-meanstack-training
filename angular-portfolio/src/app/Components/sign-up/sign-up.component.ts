@@ -27,9 +27,19 @@ export class SignUpComponent implements OnInit {
 
   RegisterUser()
   {
+    let UserHolder:User[];
+
+    UserHolder = JSON.parse(sessionStorage.getItem('Key'));
+
+    if(UserHolder == null)
+    {
+      UserHolder = [];
+    }
+
 
     let newUser = this.CreateUser();
-    let newUserString = JSON.stringify(newUser);
+    UserHolder.push(newUser);
+    let newUserString = JSON.stringify(UserHolder);
     sessionStorage.setItem('Key',newUserString);
 
     this.router.navigate(['']);
@@ -41,7 +51,7 @@ export class SignUpComponent implements OnInit {
     let LName = this.SignUp.controls["LastName"].value;
     let UName = this.SignUp.controls["Username"].value;
     let Password = this.SignUp.controls["Password"].value;
-    return new User(FName,LName,UName,Password);
+    return new User(FName,LName,UName,Password,[]);
 
   }
 

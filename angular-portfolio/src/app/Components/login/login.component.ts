@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
 
   submitForm()
   {
+    /*
     let temp = sessionStorage.getItem('Key') || '';
     let TempUser:User = JSON.parse(temp);
     if(TempUser != null)
@@ -44,7 +45,15 @@ export class LoginComponent implements OnInit {
         this.Login.controls['UserName'].setValue('');
       this.Login.controls['Password'].setValue('');
       }
+    }*/
+    let LoginUName = this.Login.controls['UserName'].value;
+    let LoginPassword = this.Login.controls['Password'].value;
+    if(this.UService.ValidateUser(LoginUName,LoginPassword))
+    {
+      this.UService.SetUser(LoginUName,LoginPassword);
+      this.router.navigate(['portfolio']);
     }
+
   }
 
 }

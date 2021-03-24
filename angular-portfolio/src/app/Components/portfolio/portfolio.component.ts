@@ -22,6 +22,7 @@ ContactFormGroup = new FormGroup(
   
   constructor(private UService:UserService) { 
     this.CUser = UService.CurrentUser;
+    this.Contacts = this.CUser.Contacts;
     
   }
 
@@ -34,7 +35,12 @@ ContactFormGroup = new FormGroup(
     let name = this.ContactFormGroup.controls['CName'].value;
     let phone = this.ContactFormGroup.controls['CPhone'].value;
 
+    if(name != '' && phone != '')
+   { 
+     
     this.Contacts.push(new Contact(name,phone));
+    this.UService.UpdateUser(this.CUser.UName,this.CUser.Password,this.Contacts);
+  }
   }
 
 }
