@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col">
+    <h1 class="text-center"> Welcome to the Login page</h1>
+  </div>
+
+
+</div>
+<div class="row">
+  <div class="col">
+     
+    <form [formGroup]="Login" (ngSubmit)="submitForm()">
+        <div class="form-group">
+            <label>User Name</label><input type="text" formControlName="UserName" class="form-control"><br>
+            <label>Password</label><input type="password" formControlName="Password" class="form-control"><br>
+            <input type="submit" value="Submit">
+        </div>
+      
+    </form>
+  </div>
+
+</div>
+<div class="row">
+  <div class="col">
+    <a routerLink="signUp">Sign Up</a>
+  </div>
+
+</div>

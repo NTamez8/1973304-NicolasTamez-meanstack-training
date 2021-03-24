@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Quiz } from 'src/app/Classes/Quiz';
+import { QuizServiceService } from 'src/app/Services/quiz-service.service';
 
 @Component({
   selector: 'app-quiz-display',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuizDisplayComponent implements OnInit {
 
-  constructor() { }
+  QuizzesAny$: any;
+  MyQ:Quiz[] = [];
+
+
+  constructor(private QS: QuizServiceService) { }
 
   ngOnInit(): void {
+    this.QS.getQuizzes().subscribe((x:string) => {
+       this.MyQ = JSON.parse(x);
+      
+    
+    });
+    
+    
+    
   }
 
 }

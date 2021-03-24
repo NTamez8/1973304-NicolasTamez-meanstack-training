@@ -1,0 +1,42 @@
+<div class="row">
+<h1 class="text-center">My Portfolio</h1>
+</div>
+<br>
+<div class="row">
+    <div class="col-8">
+        <div class="row">
+            Welcome 
+        </div>
+        <form [formGroup] = 'ContactFormGroup'>
+
+       
+        <div class="row">
+            Contact Name <input type="text" formControlName="CName">
+        </div>
+        <div class="row">
+            Phone No.<input type="text" formControlName="CPhone">
+        </div>
+    </form>
+    </div>
+    <div class="col-4">       
+            <input type="button"  value="Save" (click)='AddContact()'>      
+    </div>
+</div>
+<br>
+<br>
+<div class="row">
+<table>
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Phone No.</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor='let contact of Contacts'>
+            <td>{{contact.CName}}</td>
+            <td>{{contact.PhoneNum}}</td>
+        </tr>
+    </tbody>
+</table>
+</div>
