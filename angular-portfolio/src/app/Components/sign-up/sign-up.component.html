@@ -1,31 +1,38 @@
 <div class="row">
-    <div class="col">
-      <h1 class="text-center"> Welcome to the sign up page</h1>
-    </div>
-  
-  
-  </div>
-  <div class="row">
-    <div class="col">
-       
-        <form [formGroup]="SignUp" (ngSubmit)="RegisterUser()">
-            <div class="form-group">
-                <label>First Name</label><input type="text" formControlName="FirstName" class="form-control"><br>
-            <label>Last Name</label><input type="text" formControlName="LastName" class="form-control"><br>
-            <label>User Name</label><input type="text" formControlName="Username" class="form-control"><br>
-            <label>Password</label><input type="password" formControlName="Password" class="form-control"><br>
-            <input type="submit" value="Submit"> <input type="reset" value="Reset">
-            </div>
-            
-          </form>
-    </div>
-  
-  </div>
-  <div class="row">
-    <div class="col">
-      <a routerLink="">Login</a>
-    </div>
-  
+  <div class="col">
+    <h1 class="text-center"> Welcome to the sign up page</h1>
   </div>
 
- 
+
+</div>
+<div class="row">
+  <div class="col">
+
+    <form [formGroup]="SignUp" (ngSubmit)="RegisterUser()">
+      <div class="form-group">
+        <label>First Name</label><input type="text" formControlName="FirstName" class="form-control"><br>
+        <label>Last Name</label><input type="text" formControlName="LastName" class="form-control"><br>
+        <label>User Name</label><input type="text" formControlName="Username" class="form-control"><br>
+        <label>Password</label><input type="password" formControlName="Password" class="form-control"><br>
+        <div class="row">
+          <div class="col">
+            <input type="submit" value="Submit">
+          </div>
+          <div class="col">
+            <input type="reset" value="Reset">
+          </div>
+
+
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+<div class="row">
+  <div class="col">
+    <a routerLink="">Login</a>
+  </div>
+
+</div>
