@@ -1,21 +1,22 @@
 <h2>Results</h2>
 <div>
-    <div *ngFor='let question of quizTaken.Questions; let i = index'>
-        <div *ngIf='quizTaken.Answers[i] == answers[i]' class='alert alert-success'><!--correct answer-->
-            <p>You got the correct answer</p>
-            <p>The question was {{quizTaken.Questions[i].Question}}</p>
-            <p>Your answer {{getAnswerFromLetter(i,answers[i])}}</p>
-        </div>
-        <div *ngIf='quizTaken.Answers[i] != answers[i]' class='alert alert-danger'><!--incorrect answer-->
-            <p>You got the answer wrong</p>
-            <p>The question was {{quizTaken.Questions[i].Question}}</p>
-            <p>Your answer {{getAnswerFromLetter(i,answers[i])}}</p>
-            <p>The correct answer {{getAnswerFromLetter(i,quizTaken.Answers[i])}}</p>
-        </div>
-        <hr>
-    </div>
     <div [class] = 'Score >=7 ? "alert alert-success":"alert alert-danger"'>
         <p>Your score is {{Score}}/10</p>
         <p [innerHTML]='Score >=7 ? "you pass":"you fail"'></p>
     </div>
+    <div *ngFor='let question of quizTaken.Questions; let i = index'>
+        <div *ngIf='quizTaken.Answers[i] == answers[i]' class='alert alert-success'><!--correct answer-->
+            <p>You got the correct answer</p>
+            <p>The question was: {{quizTaken.Questions[i].Question}}</p>
+            <p>Your answer: {{getAnswerFromLetter(i,answers[i])}}</p>
+        </div>
+        <div *ngIf='quizTaken.Answers[i] != answers[i]' class='alert alert-danger'><!--incorrect answer-->
+            <p>You got the answer wrong</p>
+            <p>The question was: {{quizTaken.Questions[i].Question}}</p>
+            <p>Your answer: {{getAnswerFromLetter(i,answers[i])}}</p>
+            <p>The correct answer: {{getAnswerFromLetter(i,quizTaken.Answers[i])}}</p>
+        </div>
+        <hr>
+    </div>
+    
 </div>

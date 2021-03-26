@@ -1,6 +1,10 @@
-<p>home works!</p>
-<ul>
-    <li *ngFor='let quiz of Quizzes'>
-        {{quiz.ShortDesc}} <a [routerLink] = "['/Quiz',quiz.ID]">Start Quiz</a>
-    </li>
-</ul>
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="row QuizContainer" *ngFor='let quiz of Quizzes; let i = index'>
+            <p>Quiz {{i + 1}}</p><br>
+            <p>{{quiz.ShortDesc}}</p>
+            <a class='text-end' [routerLink] = "['/Quiz',quiz.ID]">Start Quiz</a>
+        </div>
+    </div>
+</div>
+
