@@ -1,0 +1,15 @@
+<p>quiz works!</p>
+<div *ngIf='isTakingQuiz'>
+    <form [formGroup] = "QuizForm" (ngSubmit) = "Change()">
+        <label>Questin {{currentQuestionIndex + 1}}: {{currentQuestion.Question}}</label><br>
+        <div *ngFor='let q of currentQuestion.PossibleAnswers; let i = index'>
+            
+            <label>{{values[i]}}:  {{q}}</label><input type="radio" value={{values[i]}} formControlName="Answer" required>
+        </div>
+        <input type="submit" value="Next" [disabled] = "!QuizForm.valid" *ngIf='myAnswers.length != 9'>
+    </form>
+    <input type="button" *ngIf='myAnswers.length == 9' value='Submit Test' (click)='submitTest()'>
+</div>
+<div *ngIf='!isTakingQuiz'>
+    <app-results [answers] = 'myAnswers' [quizTaken]='myQuiz'></app-results>
+</div>

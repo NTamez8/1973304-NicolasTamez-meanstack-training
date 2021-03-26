@@ -1,0 +1,6 @@
+<p>home works!</p>
+<ul>
+    <li *ngFor='let quiz of Quizzes'>
+        {{quiz.ShortDesc}} <a [routerLink] = "['/Quiz',quiz.ID]">Start Quiz</a>
+    </li>
+</ul>
