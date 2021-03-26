@@ -1,5 +1,6 @@
 <div class="row">
   <div class="col-6 offset-3 addBorder">
+      <a routerLink=''>Quit</a>
     <div *ngIf='isTakingQuiz'>
       <form [formGroup]="QuizForm" (ngSubmit)="Change()">
         <p class='text-center'>Questin {{currentQuestionIndex + 1}}: {{currentQuestion.Question}}</p><br>

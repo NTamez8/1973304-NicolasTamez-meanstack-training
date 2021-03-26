@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Quiz } from 'src/app/Class/quiz';
 import { QuizQuestion } from 'src/app/Class/quiz-question';
+import { canComponentDeactivate } from 'src/app/Guards/quiz-leave.guard';
 import { QuizService } from 'src/app/Services/quiz.service';
 
 @Component({
@@ -10,7 +12,7 @@ import { QuizService } from 'src/app/Services/quiz.service';
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.css']
 })
-export class QuizComponent implements OnInit {
+export class QuizComponent implements OnInit,canComponentDeactivate {
 QuizForm = new FormGroup({
   Answer: new FormControl()
 });
@@ -22,6 +24,17 @@ QuizForm = new FormGroup({
  isTakingQuiz:boolean = true;
 
   constructor(private _ActiveRoute:ActivatedRoute,private Qservice:QuizService) { }
+  canDeactivate(): boolean | Observable<boolean> | Promise<boolean> {
+    
+    if(!this.isTakingQuiz)
+    return true;
+    else
+    {
+      return confirm('Are you sure you want to leave the quiz?');
+    }
+    
+  }
+  
 
   ngOnInit(): void {
     let temp = this._ActiveRoute.snapshot.paramMap.get('id');
