@@ -51,16 +51,74 @@ const displayBottomHalf = `  </tbody>
 </body>
 </html>`;
 
+const htmlTop = `<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+        <title>Task Planner</title>
+    </head>
+
+    <body>
+        <div class='container'>
+        <h1 class='text-center'>Welcome to task planner</h1>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+             
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link"  href="/display">View Tasks</a>
+                  </li>
+                </ul>
+               
+                
+              </div>
+            </div>
+          </nav>
+      
+            <h2 class='text-center'>Add Task</h2>
+            <form method="get" action='/add'>
+                <label>Emp Id: </label><input type="text" name="EmpID" id="EmpID" class="form-control" required><br>
+                <label>Task ID: </label><input type="text" name="TaskID" id="TaskID" class="form-control" required><br>
+                <label>Task: </label><textarea name="task" id="task" cols="30" rows="10" class="form-control" required></textarea><br>
+                <label>Deadline: </label><input type="date" name="Deadline" id="Deadline" class="form-control"><br>
+                <input type="submit" value='Add Task'>
+            </form>
+        </div>
+        <script>
+          
+        `;
+
+const htmlBottom = `</script>
+       
+</body>
+
+</html>`;
+const htmlInValid = `if(true)
+alert('id is already used')`
+
+
 
 const server = http.createServer((req, res) => {
     const path = url.parse(req.url, true).pathname;
 
-    if (req.url == '/') {
-        const html = fs.readFileSync('index.html');
+    if (path == '/') {
+        //const html = fs.readFileSync('index.html');
         res.writeHead(200, {
             'Content-Type': 'text/html'
         });
-        res.write(html);
+        res.write(htmlTop);
+        let temp = url.parse(req.url, true).query;
+
+        if (temp.error == 'true')
+            res.write(htmlInValid);
+        //res.write(html);
+
+        res.write(htmlBottom);
         res.end();
     } else if (path == '/add') {
         const paramaters = url.parse(req.url, true).query;
@@ -70,12 +128,43 @@ const server = http.createServer((req, res) => {
             'Task': paramaters.task,
             'Deadline': paramaters.Deadline
         };
-        jsonWriter.open('Task.json');
-        jsonWriter.writeJsonItem(JSON.stringify(jsonValues));
-        jsonWriter.close();
-        res.statusCode = 302;
-        res.setHeader('Location', '/');
-        return res.end();
+
+        if (jsonReader.open('Task.json')) {
+            tempArray = jsonReader.getAll();
+            for (let x = 0; x < tempArray.length; x++) {
+                if (paramaters.TaskID == tempArray[x].TID) {
+                    res.statusCode = 302;
+                    res.setHeader('Location', '/?error=true');
+                    return res.end();
+                }
+                else if(x == tempArray.length - 1)
+                {
+                    jsonWriter.open('Task.json');
+            jsonWriter.writeJsonItem(JSON.stringify(jsonValues));
+            jsonWriter.close();
+            res.statusCode = 302;
+            res.setHeader('Location', '/?error=false');
+            return res.end();
+                }
+            }
+
+        } else {
+            jsonWriter.open('Task.json');
+            jsonWriter.writeJsonItem(JSON.stringify(jsonValues));
+            jsonWriter.close();
+            res.statusCode = 302;
+            res.setHeader('Location', '/?error=false');
+            return res.end();
+        }
+
+
+        /*
+                jsonWriter.open('Task.json');
+                jsonWriter.writeJsonItem(JSON.stringify(jsonValues));
+                jsonWriter.close();
+                res.statusCode = 302;
+                res.setHeader('Location', '/?error=true');
+                return res.end();*/
     } else if (path == '/delete') {
         const paramaters = url.parse(req.url, true).query;
         const id = paramaters.ID;
@@ -111,13 +200,13 @@ const server = http.createServer((req, res) => {
 
         } else if (data.length == 1) {
             if (data[0].TID == id) {
-              
+
                 fs.writeFileSync('Task.json', '[]');
                 res.statusCode = 302;
                 res.setHeader('Location', '/display');
                 return res.end();
             } else {
-                
+
                 res.statusCode = 302;
                 res.setHeader('Location', '/display');
                 return res.end();
@@ -128,14 +217,14 @@ const server = http.createServer((req, res) => {
             return res.end();
         }
 
-        
+
 
 
 
 
     } else if (path == '/display') {
 
-        
+
         if (jsonReader.open('./Task.json')) {
             res.writeHead(200, {
                 'Content-Type': 'text/html'

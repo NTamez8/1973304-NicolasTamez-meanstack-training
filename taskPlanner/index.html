@@ -29,13 +29,17 @@
       
             <h2 class='text-center'>Add Task</h2>
             <form method="get" action='/add'>
-                <label>Emp Id: </label><input type="text" name="EmpID" id="EmpID" class="form-control"><br>
-                <label>Task ID: </label><input type="text" name="TaskID" id="TaskID" class="form-control"><br>
-                <label>Task: </label><textarea name="task" id="task" cols="30" rows="10" class="form-control"></textarea><br>
+                <label>Emp Id: </label><input type="text" name="EmpID" id="EmpID" class="form-control" required><br>
+                <label>Task ID: </label><input type="text" name="TaskID" id="TaskID" class="form-control" required><br>
+                <label>Task: </label><textarea name="task" id="task" cols="30" rows="10" class="form-control" required></textarea><br>
                 <label>Deadline: </label><input type="date" name="Deadline" id="Deadline" class="form-control"><br>
                 <input type="submit" value='Add Task'>
             </form>
         </div>
+        <script>
+          if(true)
+            alert('id is already used')
+        </script>
        
     </body>
 
