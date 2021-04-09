@@ -1,8 +1,6 @@
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
-const jsonWriter = require('./jsonArrayWriter');
-const jsonReader = require('./jsonArrayReader');
 
 const displayTopHalf = `<!DOCTYPE html>
 <html lang="en">
@@ -177,10 +175,11 @@ const server = http.createServer((req, res) => {
         } else {
            
             stringJSON = JSON.stringify(jsonValues);
-            lengthOfFile = fs.readFileSync('Task.json').length;
+          /*  lengthOfFile = fs.readFileSync('Task.json').length;
             id = fs.openSync('Task.json');
             fs.writeSync(id,stringJSON,position = lengthOfFile-1);
-            fs.closeSync(id);
+            fs.closeSync(id);*/
+            fs.writeFileSync('Task.json','[' + stringJSON + ']');
             res.statusCode = 302;
             res.setHeader('Location', '/?error=false');
             return res.end();
@@ -250,7 +249,7 @@ const server = http.createServer((req, res) => {
     } else if (path == '/display') {
 
 
-        if (jsonReader.open('./Task.json')) {
+        if (fs.existsSync('./Task.json')) {
             res.writeHead(200, {
                 'Content-Type': 'text/html'
             });
@@ -279,7 +278,7 @@ const server = http.createServer((req, res) => {
             res.write(displayTopHalf);
 
             res.write(displayBottomHalf);
-            res.end('end');
+            res.end();
         }
 
     }
