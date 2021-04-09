@@ -175,10 +175,7 @@ const server = http.createServer((req, res) => {
         } else {
            
             stringJSON = JSON.stringify(jsonValues);
-          /*  lengthOfFile = fs.readFileSync('Task.json').length;
-            id = fs.openSync('Task.json');
-            fs.writeSync(id,stringJSON,position = lengthOfFile-1);
-            fs.closeSync(id);*/
+          
             fs.writeFileSync('Task.json','[' + stringJSON + ']');
             res.statusCode = 302;
             res.setHeader('Location', '/?error=false');
