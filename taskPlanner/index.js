@@ -107,7 +107,7 @@ const server = http.createServer((req, res) => {
     const path = url.parse(req.url, true).pathname;
 
     if (path == '/') {
-        //const html = fs.readFileSync('index.html');
+       
         res.writeHead(200, {
             'Content-Type': 'text/html'
         });
@@ -116,7 +116,7 @@ const server = http.createServer((req, res) => {
 
         if (temp.error == 'true')
             res.write(htmlInValid);
-        //res.write(html);
+       
 
         res.write(htmlBottom);
         res.end();
@@ -129,57 +129,83 @@ const server = http.createServer((req, res) => {
             'Deadline': paramaters.Deadline
         };
 
-        if (jsonReader.open('Task.json')) {
-            tempArray = jsonReader.getAll();
+        if (fs.existsSync('Task.json')) {
+            tempArray = JSON.parse(fs.readFileSync('Task.json'));
             for (let x = 0; x < tempArray.length; x++) {
                 if (paramaters.TaskID == tempArray[x].TID) {
                     res.statusCode = 302;
                     res.setHeader('Location', '/?error=true');
                     return res.end();
-                }
-                else if(x == tempArray.length - 1)
-                {
+                } else if (x == tempArray.length - 1) {
+                    stringJSON = JSON.stringify(jsonValues);
+                    lengthOfFile = fs.readFileSync('Task.json').length;
+                  let stream =  fs.createWriteStream('Task.json',{flags:'r+',start:lengthOfFile-1});
+                  stream.write(','+stringJSON+']');
+                  stream.end();
+                  /*
+                    id = fs.openSync('Task.json','a');
+                    bufferV = Buffer.from(','+stringJSON+']','utf8');
+                   
+                    fs.writeSync(id,bufferV,0,bufferV.length,-1);
+                    fs.closeSync(id);*/
+                    /*
                     jsonWriter.open('Task.json');
-            jsonWriter.writeJsonItem(JSON.stringify(jsonValues));
-            jsonWriter.close();
-            res.statusCode = 302;
-            res.setHeader('Location', '/?error=false');
-            return res.end();
+                    jsonWriter.writeJsonItem(JSON.stringify(jsonValues));
+                    jsonWriter.close();*/
+                    res.statusCode = 302;
+                    res.setHeader('Location', '/?error=false');
+                    return res.end();
                 }
+            }
+            if(tempArray.length == 0)
+            {
+                stringJSON = JSON.stringify(jsonValues);
+                fs.writeFileSync('Task.json','['+stringJSON+']');
+                    //lengthOfFile = fs.readFileSync('Task.json').length;
+                    //id = fs.openSync('Task.json');
+                    //fs.writeSync(id,stringJSON,position = lengthOfFile-1);
+                    //fs.closeSync(id);
+                    /*
+                    jsonWriter.open('Task.json');
+                    jsonWriter.writeJsonItem(JSON.stringify(jsonValues));
+                    jsonWriter.close();*/
+                    res.statusCode = 302;
+                    res.setHeader('Location', '/?error=false');
+                    return res.end();
             }
 
         } else {
-            jsonWriter.open('Task.json');
-            jsonWriter.writeJsonItem(JSON.stringify(jsonValues));
-            jsonWriter.close();
+           
+            stringJSON = JSON.stringify(jsonValues);
+            lengthOfFile = fs.readFileSync('Task.json').length;
+            id = fs.openSync('Task.json');
+            fs.writeSync(id,stringJSON,position = lengthOfFile-1);
+            fs.closeSync(id);
             res.statusCode = 302;
             res.setHeader('Location', '/?error=false');
             return res.end();
         }
 
 
-        /*
-                jsonWriter.open('Task.json');
-                jsonWriter.writeJsonItem(JSON.stringify(jsonValues));
-                jsonWriter.close();
-                res.statusCode = 302;
-                res.setHeader('Location', '/?error=true');
-                return res.end();*/
+      
     } else if (path == '/delete') {
         const paramaters = url.parse(req.url, true).query;
         const id = paramaters.ID;
-        jsonReader.open('./Task.json');
-        let data = jsonReader.getAll();
+     
+        data = JSON.parse(fs.readFileSync('Task.json'));
         let newArray = [];
         if (data.length > 1) {
 
             newArray = data.filter(json => json.TID != id);
+          
             fs.writeFileSync('Task.json', '[');
             for (let x = 0; x < newArray.length; x++) {
                 fs.writeFileSync('Task.json', JSON.stringify(newArray[x]), {
                     flag: 'a'
                 });
+                
                 if (x == newArray.length - 1) {
+                   
                     fs.writeFileSync('Task.json', ']', {
                         flag: 'a'
                     });
@@ -192,10 +218,9 @@ const server = http.createServer((req, res) => {
                     fs.writeFileSync('Task.json', ',', {
                         flag: 'a'
                     });
-                    res.statusCode = 302;
-                    res.setHeader('Location', '/display');
-                    return res.end();
+                    
                 }
+
             }
 
         } else if (data.length == 1) {
@@ -231,7 +256,8 @@ const server = http.createServer((req, res) => {
             });
             res.write(displayTopHalf);
 
-            jsonData = jsonReader.getAll();
+            
+            jsonData = JSON.parse(fs.readFileSync('Task.json'));
             tableContent = ``;
 
 
