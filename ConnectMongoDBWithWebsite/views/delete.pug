@@ -1,0 +1,16 @@
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Delete
+    body 
+        h1 Delete Course
+        form(action="/delete", method="post")
+            label Course Id: 
+            input(type="number", name="cId" required)
+            br
+            input(type="submit", value="Update")
+        if invalid
+            script.
+                alert("Invalid Id")
