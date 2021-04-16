@@ -11,21 +11,6 @@ let items = getItemsToAdd();
 mongoose.connect(url,mongooseDbOption);  
 addItemsToDB(items,mongoose.connection);
 
-/*
-let db = mongoose.connection;
-db.on('error',(err)=>console.log(err));
-db.once('open',()=>{
-    let callData = new mongoose.Schema({
-        _id:Number,
-        source:String,
-        destination:String,
-        sourceLocation:String,
-        callDuration:String,
-        roaming:String,
-        callCharge:Number
-
-    });
-});*/
 function getItemsToAdd()
 {
    let data = fs.readFileSync(__dirname + '/call_data.json');
@@ -52,16 +37,7 @@ async function addItemsToDB(itemsToAdd,db)
     
         });
         
-       // let Call = mongoose.model('Call',callData);
-        /*
-        for(let x = 0; x < itemsToAdd.length; x++)
-        {
-            let nItem = new Call(itemsToAdd[x]);
-            nItem.save();
-
-            if(x == itemsToAdd.length - 1)
-                mongoose.disconnect();
-        }*/
+      
         test(itemsToAdd,callData)
         
        
