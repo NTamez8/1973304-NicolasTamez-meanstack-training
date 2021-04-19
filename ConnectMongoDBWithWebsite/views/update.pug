@@ -6,6 +6,18 @@ html(lang="en")
         title Update
     body 
         h1 Update Course
+        ul 
+            li 
+                a(href="http://localhost:8080/") home page
+            li 
+                a(href="http://localhost:8080/add") Add Course
+                    
+            li 
+                a(href="http://localhost:8080/update") Update Course
+            li 
+                a(href="http://localhost:8080/delete") Delete Course
+            li 
+                a(href="http://localhost:8080/fetch") Fetch Courses   
         form(action="/update", method="post")
             label Course Id: 
             input(type="number", name="cId" required)
