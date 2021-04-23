@@ -18,7 +18,7 @@ pipeline {
         stage("Test")
         {
             steps{
-                sh "node app.js"
+                sh "node JenkinsPipeline/index.js"
             }
         }
         stage("Release the version")
